@@ -39,9 +39,9 @@ public class TicketControllerTests {
         request.setSection("A");
 
         User user = new User();
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        user.setEmailAddress("john.doe@example.com");
+        user.setFirstName("Lokesh");
+        user.setLastName("Kumar");
+        user.setEmailAddress("lokesh.kumar@example.com");
         request.setUser(user);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/tickets/purchase")
@@ -54,10 +54,10 @@ public class TicketControllerTests {
     @Test
     @Order(2)
     void testGetReceipt() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/tickets/receipt/JohnDoe"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/tickets/receipt/LokeshKumar"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Receipt details")))
-                .andExpect(content().string(containsString("John Doe")))
+                .andExpect(content().string(containsString("Lokesh Kumar")))
                 .andExpect(content().string(containsString("Price Paid: $20")));
     }
 
@@ -67,22 +67,22 @@ public class TicketControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/tickets/users?section=A"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
-                .andExpect(jsonPath("$.JohnDoe").value("A-1"));
+                .andExpect(jsonPath("$.LokeshKumar").value("A-1"));
     }
 
     @Test
     @Order(4)
     void testModifyUserSeat() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/api/tickets/modify-seat/JohnDoe?newSeat=A-10"))
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/tickets/modify-seat/LokeshKumar?newSeat=A-10"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Seat for user JohnDoe modified to A-10")));
+                .andExpect(content().string(containsString("Seat for user LokeshKumar modified to A-10")));
     }
     
     @Test
     @Order(5)
     void testRemoveUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/api/tickets/remove/JohnDoe"))
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/tickets/remove/LokeshKumar"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("User with ID JohnDoe removed")));
+                .andExpect(content().string(containsString("User with ID LokeshKumar removed")));
     }
 }
