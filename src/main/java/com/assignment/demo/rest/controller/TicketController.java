@@ -192,7 +192,13 @@ public class TicketController {
 				number = (int) al.remove(0);
 				logger.info("Assigning seat {} from releasedSeats. updated list: {}", number, releasedSeats);
 				ArrayList<Integer> abl = AlreadyBookedSeats.get(section);
-				abl.add(number);
+				if(abl != null) {
+					abl.add(number);
+				} else {
+					abl = new ArrayList<>();
+					abl.add(number);
+				}
+				
 				AlreadyBookedSeats.put(section, abl);
 				return (section + "-" + number);
 			}
